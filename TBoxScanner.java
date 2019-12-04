@@ -1,32 +1,20 @@
-package $owlapi.tutorial.msc;
+package msc;
 
-import java.awt.List;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.stream.Stream;
-
-import javax.swing.text.html.HTMLDocument.Iterator;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLAnnotation;
-import org.semanticweb.owlapi.model.OWLAnnotationAxiom;
 import org.semanticweb.owlapi.model.OWLAsymmetricObjectPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLIrreflexiveObjectPropertyAxiom;
-import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
-import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLObjectPropertyDomainAxiom;
 import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 import org.semanticweb.owlapi.model.OWLObjectPropertyRangeAxiom;
@@ -34,10 +22,7 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLSubObjectPropertyOfAxiom;
-import org.semanticweb.owlapi.model.OWLSubPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLSymmetricObjectPropertyAxiom;
-import org.semanticweb.owlapi.model.parameters.Imports;
-import org.semanticweb.owlapi.reasoner.InferenceType;
 import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
@@ -55,7 +40,7 @@ public class TBoxScanner {
 		long startTime = System.nanoTime();
 		//Load the ontologies
 		OWLOntologyManager man = OWLManager.createOWLOntologyManager();
-		File file = new File("/home/ktgroup/workspaceJan18/OWLAPIKem/msc/ontologies/NELL.ontology.ttl");
+		File file = new File("TBoxScanner/ontologies/NELL.ontology.ttl");
 		OWLOntology ont = man.loadOntologyFromOntologyDocument(file);
 
 		OWLReasonerFactory rf = new JFactFactory();
@@ -65,43 +50,44 @@ public class TBoxScanner {
 		String domainProp = new String();
 		String Range = new String();
 		String rangeProp = new String();
-		File file1 = new File("/home/ktgroup/workspaceJan18/OWLAPIKem/msc/resultTest/NELL4JIST18/PrecomputeTBOX1.txt");
+		File file1 = new File("TBoxScanner/resultTest/NELL4JIST18/PrecomputeTBOX1.txt");
 		FileWriter fw1 = new FileWriter(file1);
 		PrintWriter printWriter1 = new PrintWriter(fw1);
-		File file2 = new File("/home/ktgroup/workspaceJan18/OWLAPIKem/msc/resultTest/NELL4JIST18/PrecomputeTBOX2.txt");
+		File file2 = new File("TBoxScanner/resultTest/NELL4JIST18/PrecomputeTBOX2.txt");
 		FileWriter fw2 = new FileWriter(file2);
 		PrintWriter printWriter2 = new PrintWriter(fw2);
 		//PrintWriter 3 menghasilkan file PrecomputeTBOX3 yang bisa digunakan untuk pattern ID 3.
-		File file3 = new File("/home/ktgroup/workspaceJan18/OWLAPIKem/msc/resultTest/NELL4JIST18/PrecomputeTBOX3.txt");
+		File file3 = new File("TBoxScanner/resultTest/NELL4JIST18/PrecomputeTBOX3.txt");
 		FileWriter fw3 = new FileWriter(file3);
 		PrintWriter printWriter3 = new PrintWriter(fw3);
-		File file4 = new File("/home/ktgroup/workspaceJan18/OWLAPIKem/msc/resultTest/NELL4JIST18/PrecomputeTBOX4.txt");
+		File file4 = new File("TBoxScanner/resultTest/NELL4JIST18/PrecomputeTBOX4.txt");
 		FileWriter fw4 = new FileWriter(file4);
 		PrintWriter printWriter4 = new PrintWriter(fw4);		
-		File file5 = new File("/home/ktgroup/workspaceJan18/OWLAPIKem/msc/resultTest/NELL4JIST18/PrecomputeTBOX5.txt");
+		File file5 = new File("TBoxScanner/resultTest/NELL4JIST18/PrecomputeTBOX5.txt");
 		FileWriter fw5 = new FileWriter(file5);
 		PrintWriter printWriter5 = new PrintWriter(fw5);
-		File file6 = new File("/home/ktgroup/workspaceJan18/OWLAPIKem/msc/resultTest/NELL4JIST18/PrecomputeTBOX6.txt");
+		File file6 = new File("TBoxScanner/resultTest/NELL4JIST18/PrecomputeTBOX6.txt");
 		FileWriter fw6 = new FileWriter(file6);
 		PrintWriter printWriter6 = new PrintWriter(fw6);
-		File file7 = new File("/home/ktgroup/workspaceJan18/OWLAPIKem/msc/resultTest/NELL4JIST18/PrecomputeTBOX7.txt");
+		File file7 = new File("TBoxScanner/resultTest/NELL4JIST18/PrecomputeTBOX7.txt");
 		FileWriter fw7 = new FileWriter(file7);			
 		PrintWriter printWriter7 = new PrintWriter(fw7);
-		File file8 = new File("/home/ktgroup/workspaceJan18/OWLAPIKem/msc/resultTest/NELL4JIST18/PrecomputeTBOX8.txt");
+		File file8 = new File("TBoxScanner/resultTest/NELL4JIST18/PrecomputeTBOX8.txt");
 		FileWriter fw8 = new FileWriter(file8);
 		PrintWriter printWriter8 = new PrintWriter(fw8);
-		File file9 = new File("/home/ktgroup/workspaceJan18/OWLAPIKem/msc/resultTest/NELL4JIST18/PrecomputeTBOX9.txt");
+		File file9 = new File("TBoxScanner/resultTest/NELL4JIST18/PrecomputeTBOX9.txt");
 		FileWriter fw9 = new FileWriter(file9);
 		PrintWriter printWriter9 = new PrintWriter(fw9);
-		File file10 = new File("/home/ktgroup/workspaceJan18/OWLAPIKem/msc/resultTest/NELL4JIST18/PrecomputeTBOX10.txt");
+		File file10 = new File("TBoxScanner/resultTest/NELL4JIST18/PrecomputeTBOX10.txt");
 		FileWriter fw10 = new FileWriter(file10);
 		PrintWriter printWriter10 = new PrintWriter(fw10);
-		File file11 = new File("/home/ktgroup/workspaceJan18/OWLAPIKem/msc/resultTest/NELL4JIST18/PrecomputeTBOX11.txt");
+		File file11 = new File("TBoxScanner/resultTest/NELL4JIST18/PrecomputeTBOX11.txt");
 		FileWriter fw11 = new FileWriter(file11);
 		PrintWriter printWriter11 = new PrintWriter(fw11);
 		
 		String domainSuper = new String();
 		
+		long start1Time = System.nanoTime();
 		for(OWLObjectPropertyDomainAxiom doma: ont.getAxioms(AxiomType.OBJECT_PROPERTY_DOMAIN)){
 			//Prop = doma.getProperty().getNamedProperty().getIRI().getShortForm();
 			Prop = doma.getProperty().getNamedProperty().toString();
@@ -117,7 +103,10 @@ public class TBoxScanner {
 	        	
 			}
 		printWriter1.close();
+		long end1Time = System.nanoTime();
+		System.out.println("module 1 took "+((end1Time-start1Time)/1000000)+" ms");
 		
+		long start2Time = System.nanoTime();
 		for(OWLObjectPropertyRangeAxiom rang: ont.getAxioms(AxiomType.OBJECT_PROPERTY_RANGE)){
 			//Range = rang.getProperty().getNamedProperty().getIRI().getShortForm();
 			Range = rang.getProperty().getNamedProperty().toString();
@@ -134,7 +123,10 @@ public class TBoxScanner {
 	        	
 			}
 		printWriter2.close();
-			
+		long end2Time = System.nanoTime();
+		System.out.println("module 2 took "+((end2Time-start2Time)/1000000)+" ms");
+		
+		long start3Time = System.nanoTime();
 		for(OWLObjectProperty prop : ont.getObjectPropertiesInSignature()){ 
 			NodeSet<OWLObjectPropertyExpression> properties = reasoner.getSubObjectProperties(prop, false);
 			//if the size == 1, it means the property does not have any subobject property.
@@ -264,7 +256,10 @@ public class TBoxScanner {
 			}			
 		}
 		printWriter3.close();
-
+		long end3Time = System.nanoTime();
+		System.out.println("module 3 took "+((end3Time-start3Time)/1000000)+" ms");
+		
+		long start4Time = System.nanoTime();
 		for(OWLObjectProperty prop : ont.getObjectPropertiesInSignature()){ 
 			NodeSet<OWLObjectPropertyExpression> properties = reasoner.getSubObjectProperties(prop, false);
 			//if the size == 1, it means the property does not have any subobject property.
@@ -386,6 +381,10 @@ public class TBoxScanner {
 			}			
 		}
 		printWriter4.close();
+		long end4Time = System.nanoTime();
+		System.out.println("module 4 took "+((end4Time-start4Time)/1000000)+" ms");
+		
+		
 		long start5Time = System.nanoTime();
 		//we disable pattern 5 until 7 for ISWC publication (because it is too long)
 		//the fifth pattern		
@@ -420,8 +419,11 @@ public class TBoxScanner {
 		printWriter5.close();
 		long end5Time = System.nanoTime();
 		System.out.println("module 5 took "+((end5Time-start5Time)/1000000)+" ms");
+		
+		
 		//the sixth pattern
 		//range of r1 is disjoint with domain of r2
+		long start6Time = System.nanoTime();
 		String relation6_1 = new String();
 		String relation6_2 = new String();
 		String range6 = new String();
@@ -451,8 +453,12 @@ public class TBoxScanner {
 			}			
 		}
 		printWriter6.close();
+		long end6Time = System.nanoTime();
+		System.out.println("module 6 took "+((end6Time-start6Time)/1000000)+" ms");
+		
 		
 		//the seventh pattern
+		long start7Time = System.nanoTime();
 		String prop1r = new String();
 		String prop2r = new String();
 		String relation1r = new String();
@@ -482,14 +488,20 @@ public class TBoxScanner {
 			}
 		}
 		printWriter7.close();
+		long end7Time = System.nanoTime();
+		System.out.println("module 7 took "+((end7Time-start7Time)/1000000)+" ms");
 		
 		//the eighth pattern (find all asymmetric properties...)
+		long start8Time = System.nanoTime();
 		for(OWLAsymmetricObjectPropertyAxiom oba8 : ont.getAxioms(AxiomType.ASYMMETRIC_OBJECT_PROPERTY)) {
 			printWriter8.println(oba8.getProperty().toString());
 		}
 		printWriter8.close();
+		long end8Time = System.nanoTime();
+		System.out.println("module 8 took "+((end8Time-start8Time)/1000000)+" ms");
 		
 		//the ninth pattern 
+		long start9Time = System.nanoTime();
 		for(OWLAsymmetricObjectPropertyAxiom oba9 : ont.getAxioms(AxiomType.ASYMMETRIC_OBJECT_PROPERTY)) {			
 			OWLObjectPropertyExpression expr = oba9.getProperty();
 			NodeSet<OWLObjectPropertyExpression> properties9 = reasoner.getSubObjectProperties(expr, false);
@@ -546,11 +558,14 @@ public class TBoxScanner {
 			}
 		}
 		printWriter9.close();
+		long end9Time = System.nanoTime();
+		System.out.println("module 9 took "+((end9Time-start9Time)/1000000)+" ms");
 		
 		//the tenth pattern (need to remove the duplicate
 		//r2 symmetric, r3 asymmetric
 		//r1 subclassof r2, r1 subclassof r3, 
 		//outputkan r1
+		long start10Time = System.nanoTime();
 		String subProprel = new String();		
 		for(OWLSubObjectPropertyOfAxiom osa10 : ont.getAxioms(AxiomType.SUB_OBJECT_PROPERTY)) {			
 			subProprel = osa10.getSubProperty().toString();
@@ -656,13 +671,18 @@ public class TBoxScanner {
 		}
 		
 		printWriter10.close();
+		long end10Time = System.nanoTime();
+		System.out.println("module 10 took "+((end10Time-start10Time)/1000000)+" ms");
 		
 		//the eleventh pattern
+		long start11Time = System.nanoTime();
 		for(OWLIrreflexiveObjectPropertyAxiom irl : ont.getAxioms(AxiomType.IRREFLEXIVE_OBJECT_PROPERTY)) 
 		{
 			printWriter11.println(irl.getProperty().toString());
 		}
 		printWriter11.close();
+		long end11Time = System.nanoTime();
+		System.out.println("module 11 took "+((end11Time-start11Time)/1000000)+" ms");
 		
 		long endTime = System.nanoTime();
 		System.out.println("It took "+((endTime-startTime)/1000000)+" ms");
