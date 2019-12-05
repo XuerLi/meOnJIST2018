@@ -62,7 +62,9 @@ public class TBoxScanner {
 		PrintWriter printWriter3 = new PrintWriter(fw3);
 		File file4 = new File("TBoxScanner/resultTest/NELL4JIST18/PrecomputeTBOX4.txt");
 		FileWriter fw4 = new FileWriter(file4);
-		PrintWriter printWriter4 = new PrintWriter(fw4);		
+		PrintWriter printWriter4 = new PrintWriter(fw4);
+		
+		/*
 		File file5 = new File("TBoxScanner/resultTest/NELL4JIST18/PrecomputeTBOX5.txt");
 		FileWriter fw5 = new FileWriter(file5);
 		PrintWriter printWriter5 = new PrintWriter(fw5);
@@ -72,6 +74,7 @@ public class TBoxScanner {
 		File file7 = new File("TBoxScanner/resultTest/NELL4JIST18/PrecomputeTBOX7.txt");
 		FileWriter fw7 = new FileWriter(file7);			
 		PrintWriter printWriter7 = new PrintWriter(fw7);
+		*/
 		File file8 = new File("TBoxScanner/resultTest/NELL4JIST18/PrecomputeTBOX8.txt");
 		FileWriter fw8 = new FileWriter(file8);
 		PrintWriter printWriter8 = new PrintWriter(fw8);
@@ -84,14 +87,22 @@ public class TBoxScanner {
 		File file11 = new File("TBoxScanner/resultTest/NELL4JIST18/PrecomputeTBOX11.txt");
 		FileWriter fw11 = new FileWriter(file11);
 		PrintWriter printWriter11 = new PrintWriter(fw11);
+		File file0 = new File("TBoxScanner/resultTest/NELL4JIST18/debugging.txt");
+		PrintWriter printWriter0 = new PrintWriter(file0);
 		
 		String domainSuper = new String();
 		
+		/*** Reference paper ¡°More Is Better: Sequential Combinations of Knowledge Graph Embedding Approaches¡±.
+		 *** The paper can be found here:   https://link.springer.com/content/pdf/10.1007%2F978-3-030-04284-4_2.pdf */
+		// Inconsistency justification pattern 1 in Table 1
 		long start1Time = System.nanoTime();
+		printWriter0.print("-------------------------------------------------------------\n");
 		for(OWLObjectPropertyDomainAxiom doma: ont.getAxioms(AxiomType.OBJECT_PROPERTY_DOMAIN)){
+			printWriter0.print("OWLObjectPropertyDomainAxiom doma is£º "+doma.toString()+ "\n.");
 			//Prop = doma.getProperty().getNamedProperty().getIRI().getShortForm();
 			Prop = doma.getProperty().getNamedProperty().toString();
 			domainProp = doma.getDomain().toString();
+			printWriter0.print("      domainProp = doma.getDomain().toString() is£º "+domainProp+ "\n.");
 			NodeSet<OWLClass> sof = reasoner.getDisjointClasses(doma.getDomain());
 			printWriter1.print(Prop+"\t"+domainProp+"\t");
 			//printWriter1.print(Prop+"\t");
@@ -106,11 +117,15 @@ public class TBoxScanner {
 		long end1Time = System.nanoTime();
 		System.out.println("module 1 took "+((end1Time-start1Time)/1000000)+" ms");
 		
+		// Inconsistency justification pattern 2 in Table 1
+		printWriter0.print("-------------------------------------------------------------\n");
 		long start2Time = System.nanoTime();
 		for(OWLObjectPropertyRangeAxiom rang: ont.getAxioms(AxiomType.OBJECT_PROPERTY_RANGE)){
 			//Range = rang.getProperty().getNamedProperty().getIRI().getShortForm();
+			printWriter0.print("OWLObjectPropertyRangeAxiom rang is£º "+rang.toString()+ "\n.");
 			Range = rang.getProperty().getNamedProperty().toString();
 			rangeProp = rang.getRange().toString();
+			printWriter0.print("      rangeProp = rang.getRange().toString() is£º "+rangeProp+ "\n.");
 			NodeSet<OWLClass> sof3 = reasoner.getDisjointClasses(rang.getRange());
 			printWriter2.print(Range+"\t"+rangeProp+"\t");
 			//printWriter2.print(Range+"\t");
@@ -126,10 +141,12 @@ public class TBoxScanner {
 		long end2Time = System.nanoTime();
 		System.out.println("module 2 took "+((end2Time-start2Time)/1000000)+" ms");
 		
+		printWriter0.print("-------------------------------------------------------------\n");
 		long start3Time = System.nanoTime();
 		for(OWLObjectProperty prop : ont.getObjectPropertiesInSignature()){ 
-			NodeSet<OWLObjectPropertyExpression> properties = reasoner.getSubObjectProperties(prop, false);
-			//if the size == 1, it means the property does not have any subobject property.
+			NodeSet<OWLObjectPropertyExpression> properties = reasoner.getSubObjectProperties(prop, false);			
+			printWriter0.print("OWLObjectPropertyExpression properties is£º "+properties.toString()+ "\n.");
+			//if the size == 1, it means the property does not have any subject property.
 			if(properties.getNodes().size()>1){				
 				String domaSup = new String();		
 				String relations = new String();
@@ -251,7 +268,7 @@ public class TBoxScanner {
 								}
 							}
 						}
-					}//end dari if(!(check.contentEquals("Node( owl:bottomObjectProperty )")))
+					}//the end of if(!(check.contentEquals("Node( owl:bottomObjectProperty )")))
 				}
 			}			
 		}
@@ -262,7 +279,8 @@ public class TBoxScanner {
 		long start4Time = System.nanoTime();
 		for(OWLObjectProperty prop : ont.getObjectPropertiesInSignature()){ 
 			NodeSet<OWLObjectPropertyExpression> properties = reasoner.getSubObjectProperties(prop, false);
-			//if the size == 1, it means the property does not have any subobject property.
+			
+			//if the size == 1, it means the property does not have any subject property.
 			if(properties.getNodes().size()>1){				
 				String rangeSup = new String();		
 				String relations = new String();
@@ -384,7 +402,7 @@ public class TBoxScanner {
 		long end4Time = System.nanoTime();
 		System.out.println("module 4 took "+((end4Time-start4Time)/1000000)+" ms");
 		
-		
+		/*
 		long start5Time = System.nanoTime();
 		//we disable pattern 5 until 7 for ISWC publication (because it is too long)
 		//the fifth pattern		
@@ -490,7 +508,7 @@ public class TBoxScanner {
 		printWriter7.close();
 		long end7Time = System.nanoTime();
 		System.out.println("module 7 took "+((end7Time-start7Time)/1000000)+" ms");
-		
+		*/
 		//the eighth pattern (find all asymmetric properties...)
 		long start8Time = System.nanoTime();
 		for(OWLAsymmetricObjectPropertyAxiom oba8 : ont.getAxioms(AxiomType.ASYMMETRIC_OBJECT_PROPERTY)) {
@@ -681,6 +699,7 @@ public class TBoxScanner {
 			printWriter11.println(irl.getProperty().toString());
 		}
 		printWriter11.close();
+		printWriter0.close();
 		long end11Time = System.nanoTime();
 		System.out.println("module 11 took "+((end11Time-start11Time)/1000000)+" ms");
 		
